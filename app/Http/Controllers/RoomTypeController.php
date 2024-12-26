@@ -21,7 +21,14 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'price_per_night' => 'required|numeric|min:0',
+        ]);
+
+        $roomType = RoomType::create($validated);
+        return response()->json($roomType, 201);
     }
 
     /**
@@ -38,7 +45,15 @@ class RoomTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'price_per_night' => 'required|numeric|min:0',
+        ]);
+
+        $roomType = RoomType::findOrFail($id);
+        $roomType->update($validated);
+        return response()->json($roomType);
     }
 
     /**
