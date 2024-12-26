@@ -12,7 +12,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations=Reservation::all();
+        $reservations=Reservation::with(['guest', 'room', 'payments']);
         return response()->json($reservations);
     }
 

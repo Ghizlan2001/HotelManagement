@@ -22,11 +22,11 @@ class Room extends Model
 
     public function reservations()
     {
-        return $this->hasMany(Reservation::class, 'room_id');
+        return $this->hasMany(Reservation::class);
     }
 
     public function roomMaintenance()
     {
-        return $this->hasMany(RoomMaintenance::class, 'room_id');
+        return $this->hasMany(RoomMaintenance::class);
     }
 }

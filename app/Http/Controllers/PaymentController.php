@@ -12,7 +12,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments=Payment::all();
+        $payments=Payment::with('reservation');
         return response()->json($payments);
     }
 

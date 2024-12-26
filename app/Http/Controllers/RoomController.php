@@ -12,7 +12,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $room=Room::all();
+        $room=Room::with(['reservations', 'maintenanceRecords']);
         return response()->json($room);
     }
 

@@ -12,7 +12,7 @@ class ServiceRequestController extends Controller
      */
     public function index()
     {
-        $serviceRequests = ServiceRequest::all();
+        $serviceRequests = ServiceRequest::with(['guest', 'service']);
         return response()->json($serviceRequests);
     }
 

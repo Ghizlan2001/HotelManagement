@@ -23,11 +23,11 @@ class Guest extends Model
 
     public function reservations()
     {
-        return $this->hasMany(Reservation::class, 'guest_id');
+        return $this->hasMany(Reservation::class);
     }
 
     public function serviceRequests()
     {
-        return $this->hasMany(ServiceRequest::class, 'guest_id');
+        return $this->hasMany(ServiceRequest::class);
     }
 }

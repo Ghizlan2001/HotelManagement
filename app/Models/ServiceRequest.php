@@ -21,11 +21,11 @@ class ServiceRequest extends Model
 
     public function guest()
     {
-        return $this->belongsTo(Guest::class, 'guest_id');
+        return $this->belongsTo(Guest::class);
     }
 
     public function service()
     {
-        return $this->belongsTo(Service::class, 'service_id');
+        return $this->belongsTo(Service::class);
     }
 }

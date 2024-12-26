@@ -29,11 +29,11 @@ class Reservation extends Model
 
     public function room()
     {
-        return $this->belongsTo(Room::class, 'room_id');
+        return $this->belongsTo(Room::class);
     }
 
     public function payments()
     {
-        return $this->hasMany(Payment::class, 'reservation_id');
+        return $this->hasMany(Payment::class);
     }
 }
