@@ -12,7 +12,7 @@ class RoomMaintenanceController extends Controller
      */
     public function index()
     {
-        $roomMaintenances = RoomMaintenance::with('rooms');
+        $roomMaintenances = RoomMaintenance::with('rooms')->get();
         return response()->json($roomMaintenances);
     }
 

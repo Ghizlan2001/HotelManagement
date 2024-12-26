@@ -12,7 +12,7 @@ class RoomTypeController extends Controller
      */
     public function index()
     {
-        $roomTypes = RoomType::with('rooms');
+        $roomTypes = RoomType::with('rooms')->get();
         return response()->json($roomTypes);
     }
 
