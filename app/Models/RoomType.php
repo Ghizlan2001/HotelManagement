@@ -9,7 +9,7 @@ class RoomType extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'room_type_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'room_type_name',

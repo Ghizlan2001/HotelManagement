@@ -9,7 +9,7 @@ class RoomMaintenance extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'maintenance_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'room_id',

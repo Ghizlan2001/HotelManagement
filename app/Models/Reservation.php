@@ -9,7 +9,7 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'reservation_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'guest_id',

@@ -12,7 +12,7 @@ class GuestController extends Controller
      */
     public function index()
     {
-        $guests=Guest::all();
+        $guests=Guest::with((['reservations', 'serviceRequests']))->get();
         return response()->json($guests);
     }
 
@@ -31,7 +31,7 @@ class GuestController extends Controller
      */
     public function show(string $id)
     {
-        $guest=Guest::with(['reservations', 'feedback', 'serviceRequests'])->findOrfail($id);
+        $guest=Guest::with(['reservations', 'serviceRequests'])->findOrfail($id);
         return response()->json($guest);
     }
 
