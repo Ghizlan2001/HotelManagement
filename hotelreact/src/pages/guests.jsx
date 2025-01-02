@@ -6,12 +6,12 @@ const Guests=()=>{
     useEffect(()=>{
         getGuests();
     },[]);
-    const getRooms=async()=>{
+    const getGuests=async()=>{
         const resp = await axios.get("/guests");
-        setGuestss(resp.data);
+        setGuests(resp.data);
         console.log(resp.data)
     }
-    getRooms();
+    getGuests();
 return(
     <div>
         <h6>Guests</h6>
