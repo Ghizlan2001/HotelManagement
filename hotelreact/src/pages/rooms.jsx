@@ -15,14 +15,15 @@ return(
     <div className="container">
         <h6 className="title">Room</h6>
         <div className="content">
-           <div className="header">
            <header>
+            <div className="header">
             <a href="" className="tab">All rooms</a>
             <a href="" className="tab">Available rooms</a>
             <a href="" className="tab">Booked rooms</a>
-            </header>
+            </div>
             <button className="add">Add room</button>
-           </div>
+            </header>
+            
             <table>
                 <tr>
                     <th>Room number</th>
@@ -42,8 +43,8 @@ return(
                     {room.reservations && room.reservations.length > 0
                         ? room.reservations[0].reservation_status
                         : "No reservations"}
-                </td>
-                    <td>{room.room_status}</td>
+                    </td>
+                    <td><span>{room.room_status}</span></td>
                     <td>{room.price_per_night}</td>
                     <td>
                     {room.reservations && room.reservations.length > 0
@@ -51,9 +52,11 @@ return(
                         : "No payment"}
                 </td>
                 <td>
+                    <span>
                     {room.room_maintenance && room.room_maintenance.length > 0
                         ? room.room_maintenance[0].maintenance_status // Display the status of the latest maintenance
                         : "No maintenance"}
+                    </span>
                 </td>
                 </tr>
             ))
