@@ -31,7 +31,7 @@ class GuestController extends Controller
      */
     public function show(string $id)
     {
-        $guest=Guest::with(['reservations', 'serviceRequests'])->findOrfail($id);
+        $guest=Guest::with(['reservations', 'serviceRequests'])->findOrFail($id);
         return response()->json($guest);
     }
 
@@ -41,7 +41,7 @@ class GuestController extends Controller
     public function update(Request $request, string $id)
     {
         $data=$request->all();
-        $guest=Guest::findOrfail($id);
+        $guest=Guest::findOrFail($id);
         $guest->update($data);
         return response()->json($guest);
     }
@@ -51,7 +51,7 @@ class GuestController extends Controller
      */
     public function destroy(string $id)
     {
-        $guest=Guest::findOrfail($id);
+        $guest=Guest::findOrFail($id);
         $guest->delete();
         return response()->json(['message'=>'Guest deleted successfully']);
     }
