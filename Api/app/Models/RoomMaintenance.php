@@ -10,7 +10,7 @@ class RoomMaintenance extends Model
     use HasFactory;
 
     protected $primaryKey = 'id';
-
+    protected $table = 'room_maintenance';
     protected $fillable = [
         'room_id',
         'issue_description',
