@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Badge from "../components/badge";
 
 const Guests=()=>{
     const [Guests, setGuests]= useState([]);
@@ -18,6 +19,11 @@ const Guests=()=>{
         setRooms(resp.data);
         console.log(resp.data);
     }
+    // const statusStyles = {
+    //     "Available": { backgroundColor: "green", color: "white", padding: "5px", borderRadius: "5px" },
+    //     "Occupied": { backgroundColor: "red", color: "white", padding: "5px", borderRadius: "5px" },
+    //     "Maintenance": { backgroundColor: "yellow", color: "black", padding: "5px", borderRadius: "5px" },
+    //   };
 return(
     <div className="container">
         <h6 className="title">Guests</h6>
@@ -50,8 +56,8 @@ return(
                                 <td>{guest.first_name} {guest.last_name}</td>
                                 <td>{reservation.room_id}</td>
                                 <td>{reservation.total_amount}</td>
-                                <td>{reservation.reservation_status}</td>
-                                <td>{room ? room.room_status : 'Unknown'}</td>
+                                <td><Badge>{reservation.reservation_status}</Badge></td>
+                                <td><Badge>{room ? room.room_status : 'Unknown'}</Badge></td>
                             </tr>
                         )
                     })
