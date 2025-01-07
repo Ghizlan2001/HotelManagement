@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Badge from "../components/badge";
 
 const Rooms=()=>{
     const [Rooms, setRooms]=useState([]);
@@ -13,7 +14,7 @@ const Rooms=()=>{
     }
 return(
     <div className="container">
-        <h6 className="title">Room</h6>
+        <h6 className="title">Rooms</h6>
         <div className="content">
            <header>
             <div className="header">
@@ -39,24 +40,26 @@ return(
                 <tr key={index}>
                     <td>{room.room_number}</td>
                     <td>{room.room_type.room_type_name}</td>
-                    <td>
+                    <td><Badge>
                     {room.reservations && room.reservations.length > 0
                         ? room.reservations[0].reservation_status
                         : "No reservations"}
+                        </Badge>
                     </td>
-                    <td><span>{room.room_status}</span></td>
+                    <td><Badge>{room.room_status}</Badge></td>
                     <td>{room.price_per_night}</td>
-                    <td>
+                    <td><Badge>
                     {room.reservations && room.reservations.length > 0
                         ? room.reservations[0].payment_status
                         : "No payment"}
+                        </Badge>
                 </td>
-                <td>
-                    <span>
+                <td><Badge>
+                   
                     {room.room_maintenance && room.room_maintenance.length > 0
                         ? room.room_maintenance[0].maintenance_status // Display the status of the latest maintenance
                         : "No maintenance"}
-                    </span>
+                    </Badge>
                 </td>
                 </tr>
             ))
