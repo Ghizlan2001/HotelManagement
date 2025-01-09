@@ -99,3 +99,14 @@ table tr:hover {
   margin-left: 70px;
   padding: 20px;
 }
+nav{
+  margin-left: 100px;
+  padding: 15px;
+}
+li{
+  list-style: none;
+}
+nav input{
+  padding: 10px;
+  width: 280px;
+}
