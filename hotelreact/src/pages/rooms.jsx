@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Badge from "../components/badge";
+import { useNavigate } from "react-router-dom";
+import AddRooms from "./addrooms";
 
-const Rooms=()=>{
-    const [Rooms, setRooms]=useState([]);
+const Rooms=({rooms, setRooms})=>{
+    const navigate = useNavigate();
     useEffect(()=>{
         getRooms();
     },[]);
@@ -12,6 +14,9 @@ const Rooms=()=>{
         setRooms(resp.data);
         console.log(resp.data)
     }
+const addroom=()=>{
+    navigate('/addrooms');
+}
 return(
     <div className="container">
         <h6 className="title">Rooms</h6>
@@ -22,7 +27,7 @@ return(
             <a href="" className="tab">Available rooms</a>
             <a href="" className="tab">Booked rooms</a>
             </div>
-            <button className="add">Add room</button>
+            <button className="add" onClick={addroom}>Add room</button>
             </header>
             
             <table>
@@ -36,7 +41,7 @@ return(
                     <th>Room maintenance</th>
                 </tr>
                 {
-                    Rooms.map((room, index) => (
+                    rooms.map((room, index) => (
                 <tr key={index}>
                     <td>{room.room_number}</td>
                     <td>{room.room_type.room_type_name}</td>

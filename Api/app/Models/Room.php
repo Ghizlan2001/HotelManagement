@@ -18,6 +18,7 @@ class Room extends Model
         'price_per_night',
         'max_occupancy',
         'description',
+        "room_type_id",
     ];
 
     public function reservations()
