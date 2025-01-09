@@ -62,7 +62,7 @@ return(
                 <td><Badge>
                    
                     {room.room_maintenance && room.room_maintenance.length > 0
-                        ? room.room_maintenance[0].maintenance_status // Display the status of the latest maintenance
+                        ? room.room_maintenance[0].maintenance_status 
                         : "No maintenance"}
                     </Badge>
                 </td>

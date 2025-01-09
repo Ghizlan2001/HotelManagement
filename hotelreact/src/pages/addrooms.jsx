@@ -1,13 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddRooms=({rooms, setRooms})=>{
+  const navigate= useNavigate();
     const [roomNumber, setRoomNumber] = useState("");
     const [roomOccupacy, setRoomOccupacy] = useState("");
     const [roomType, setRoomType] = useState("Single");
     const [roomPrice, setRoomPrice] = useState("");
     const [roomStatus, setRoomStatus] = useState("");
+    const [reservationStatus, setReservationStatus] = useState("");
     const [roomDescription, setRoomDescription] = useState("");
+    const [roomMaintenance, setRoomMaintenance] = useState("");
+    const [PaymentStatus, setPaymentStatus] = useState("");
     const addNewrooms=async(e)=>{
         e.preventDefault();
         const occupancyNumber = parseInt(roomOccupacy, 10);
@@ -22,7 +27,9 @@ const AddRooms=({rooms, setRooms})=>{
             const roomTypeMapping = {
                 "Single": 1,
                 "Double": 2,
-                "Suite": 3
+                "Suite": 3,
+                "Deluxe":4,
+                "Family":5
               };
             const resp=await axios.post('/rooms',{
                 room_number:roomNumber,
@@ -30,7 +37,14 @@ const AddRooms=({rooms, setRooms})=>{
                 room_type_id:roomTypeMapping[roomType],
                 price_per_night:roomPrice,
                 room_status:roomStatus,
-                description:roomDescription
+                description:roomDescription,
+                maintenance_status: roomMaintenance,
+                  reservations: [
+                    {
+                      reservation_status: reservationStatus, 
+                      payment_status: PaymentStatus
+                    }
+                    ]
             });
             setRooms([...rooms,resp.data]);
             setRoomNumber("");
@@ -39,6 +53,11 @@ const AddRooms=({rooms, setRooms})=>{
             setRoomPrice("");
             setRoomStatus("Available");
             setRoomDescription("");
+            setRoomMaintenance("");
+            setPaymentStatus("");
+            setReservationStatus("");
+
+            navigate("/rooms");
         }catch(error){
             console.log(error);
         }
@@ -50,7 +69,7 @@ return(
       <div className="form-group">
         <label htmlFor="roomNumber">Room Number</label>
         <input
-          type="text"
+          type="number"
           id="roomNumber"
           name="roomNumber"
           value={roomNumber}
@@ -62,7 +81,7 @@ return(
       <div className="form-group">
         <label htmlFor="roomNumber">Occupacy</label>
         <input
-          type="text"
+          type="number"
           name="Occupacy"
           value={roomOccupacy}
           onChange={(e) => setRoomOccupacy(e.target.value)}
@@ -86,6 +105,8 @@ return(
           <option value="Single">Single</option>
           <option value="Double">Double</option>
           <option value="Suite">Suite</option>
+          <option value="Family">Family</option>
+          <option value="Deluxe">Deluxe</option>
         </select>
       </div>
 
@@ -96,7 +117,7 @@ return(
           id="pricePerNight"
           name="pricePerNight"
           value={roomPrice}
-          onChange={(e) => setRoomPrice(e.target.valueAsNumber)}
+          onChange={(e) => setRoomPrice(e.target.value === "" ? "" : e.target.valueAsNumber)}
           required
         />
       </div>
@@ -112,10 +133,55 @@ return(
           required
         >
           <option value="Available">Available</option>
-          <option value="Booked">Booked</option>
+          <option value="Occupied">Occupied</option>
           <option value="Maintenance">Maintenance</option>
         </select>
       </div>
+      <div className="form-group">
+        <label htmlFor="reservationStatus">Reservation Status</label>
+        <select
+          id="roomStatus"
+          name="reservationStatus"
+          value={reservationStatus}
+          onChange={(e) => setReservationStatus(e.target.value)}
+          required
+        >
+          <option value="Confirmed">Confirmed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div className="form-group">
+        <label htmlFor="PayementStatus">Payement Status</label>
+        <select
+          id="PayementStatus"
+          name="PayementStatus"
+          value={PaymentStatus}
+          onChange={(e) => setPaymentStatus(e.target.value)}
+          required
+        >
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+          <option value="Refunded">Refunded</option>
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="RoomMaintenanc">Room maintenance</label>
+        <select
+          id="RoomMaintenanc"
+          name="RoomMaintenanc"
+          value={roomMaintenance}
+          onChange={(e) => setRoomMaintenance(e.target.value)}
+          required
+        >
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+
+        </select>
+      </div>
+      
+      
       <div className="form-group">
         <label htmlFor="roomDescription">Description</label>
         <input
