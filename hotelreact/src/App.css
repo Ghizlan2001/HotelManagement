@@ -70,3 +70,32 @@ table tr:hover {
   font-weight: bold;
   margin-bottom: 20px;
 }
+
+.sidebar {
+  width: 100px;
+  height: 100vh;
+  background-color: #3769c1;
+  padding: 20px;
+  position: fixed;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 40px;
+}
+
+.sidebar ul li {
+  margin: 20px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #fffdfd;
+  font-size: large;
+}
+
+.main-content {
+  margin-left: 70px;
+  padding: 20px;
+}
