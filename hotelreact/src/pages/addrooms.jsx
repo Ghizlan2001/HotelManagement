@@ -6,19 +6,18 @@ const AddRooms=({rooms, setRooms})=>{
   const navigate= useNavigate();
     const [roomNumber, setRoomNumber] = useState("");
     const [roomOccupacy, setRoomOccupacy] = useState("");
-    const [roomType, setRoomType] = useState("Single");
+    const [roomType, setRoomType] = useState("");
     const [roomPrice, setRoomPrice] = useState("");
     const [roomStatus, setRoomStatus] = useState("");
-    const [reservationStatus, setReservationStatus] = useState("");
+    // const [reservationStatus, setReservationStatus] = useState("");
     const [roomDescription, setRoomDescription] = useState("");
     const [roomMaintenance, setRoomMaintenance] = useState("");
-    const [PaymentStatus, setPaymentStatus] = useState("");
+    // const [PaymentStatus, setPaymentStatus] = useState("");
     const addNewrooms=async(e)=>{
         e.preventDefault();
         const occupancyNumber = parseInt(roomOccupacy, 10);
         const priceNumber = parseFloat(roomPrice);
     
-        // Validate form inputs before making the API request
         if (!roomNumber || !occupancyNumber || isNaN(priceNumber) || !roomDescription) {
           console.error("Invalid form data");
           return;
@@ -38,24 +37,24 @@ const AddRooms=({rooms, setRooms})=>{
                 price_per_night:roomPrice,
                 room_status:roomStatus,
                 description:roomDescription,
-                maintenance_status: roomMaintenance,
-                  reservations: [
-                    {
-                      reservation_status: reservationStatus, 
-                      payment_status: PaymentStatus
-                    }
-                    ]
+                room_maintenance: [{maintenance_status: roomMaintenance}],
+                // reservations: [
+                //   {
+                //     reservation_status: reservationStatus,
+                //     payment_status: PaymentStatus
+                //   }
+                // ]
             });
             setRooms([...rooms,resp.data]);
             setRoomNumber("");
             setRoomOccupacy("");
             setRoomType("Single");
             setRoomPrice("");
-            setRoomStatus("Available");
+            setRoomStatus("");
             setRoomDescription("");
             setRoomMaintenance("");
-            setPaymentStatus("");
-            setReservationStatus("");
+            // setPaymentStatus("");
+            // setReservationStatus("");
 
             navigate("/rooms");
         }catch(error){
@@ -82,7 +81,7 @@ return(
         <label htmlFor="roomNumber">Occupacy</label>
         <input
           type="number"
-          name="Occupacy"
+          name="roomOccupancy"
           value={roomOccupacy}
           onChange={(e) => setRoomOccupacy(e.target.value)}
           required
@@ -137,10 +136,10 @@ return(
           <option value="Maintenance">Maintenance</option>
         </select>
       </div>
-      <div className="form-group">
+      {/* <div className="form-group">
         <label htmlFor="reservationStatus">Reservation Status</label>
         <select
-          id="roomStatus"
+          id="reservationStatus"
           name="reservationStatus"
           value={reservationStatus}
           onChange={(e) => setReservationStatus(e.target.value)}
@@ -149,12 +148,12 @@ return(
           <option value="Confirmed">Confirmed</option>
           <option value="Cancelled">Cancelled</option>
         </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="PayementStatus">Payement Status</label>
+      </div> */}
+      {/* <div className="form-group">
+        <label htmlFor="PaymentStatus">Payement Status</label>
         <select
-          id="PayementStatus"
-          name="PayementStatus"
+          id="PaymentStatus"
+          name="PaymentStatus"
           value={PaymentStatus}
           onChange={(e) => setPaymentStatus(e.target.value)}
           required
@@ -163,13 +162,13 @@ return(
           <option value="Pending">Pending</option>
           <option value="Refunded">Refunded</option>
         </select>
-      </div>
+      </div> */}
 
       <div className="form-group">
-        <label htmlFor="RoomMaintenanc">Room maintenance</label>
+        <label htmlFor="roomMaintenance">Room maintenance</label>
         <select
-          id="RoomMaintenanc"
-          name="RoomMaintenanc"
+          id="roomMaintenance"
+          name="roomMaintenance"
           value={roomMaintenance}
           onChange={(e) => setRoomMaintenance(e.target.value)}
           required

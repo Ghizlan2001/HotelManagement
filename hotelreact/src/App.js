@@ -2,6 +2,7 @@ import './App.css';
 import Rooms from './pages/rooms';
 import Guests from './pages/guests';
 import Sidebar from './pages/sidebar';
+import RoomMaintenance from './pages/roomMaintenance';
 import AddRooms from './pages/addrooms';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
@@ -25,6 +26,7 @@ function App() {
             <Route path="/rooms" element={<Rooms setRooms={setRooms} rooms={rooms} />} />
             <Route path="/guests" element={<Guests />} />
             <Route path='/addrooms' element={<AddRooms setRooms={setRooms} Rooms={Rooms}/>}/>
+            <Route path='/roommaintenance' element={<RoomMaintenance/>}/>
           </Routes>
         </div>
       </BrowserRouter>

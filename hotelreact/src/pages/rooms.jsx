@@ -6,26 +6,35 @@ import AddRooms from "./addrooms";
 
 const Rooms=({rooms, setRooms})=>{
     const navigate = useNavigate();
+    const [originalRooms, setOriginalRooms] = useState([]);
     useEffect(()=>{
         getRooms();
     },[]);
     const getRooms=async()=>{
         const resp = await axios.get("/rooms");
         setRooms(resp.data);
+        setOriginalRooms(resp.data);
         console.log(resp.data)
     }
 const addroom=()=>{
     navigate('/addrooms');
 }
+const AvailableRooms = () => {
+    setRooms(originalRooms.filter((room) => room.room_status === "Available"));
+};
+
+const BookedRooms = () => {
+    setRooms(originalRooms.filter((room) => room.room_status === "Occupied"));
+};
 return(
     <div className="container">
         <h6 className="title">Rooms</h6>
         <div className="content">
            <header>
             <div className="header">
-            <a href="" className="tab">All rooms</a>
-            <a href="" className="tab">Available rooms</a>
-            <a href="" className="tab">Booked rooms</a>
+            <button className="tab" onClick={() => setRooms(originalRooms)}>All rooms</button>
+            <button className="tab" onClick={AvailableRooms}>Available rooms</button>
+            <button className="tab" onClick={BookedRooms}>Booked rooms</button>
             </div>
             <button className="add" onClick={addroom}>Add room</button>
             </header>
@@ -34,10 +43,8 @@ return(
                 <tr>
                     <th>Room number</th>
                     <th>Room type</th>
-                    <th>Reservation status</th>
                     <th>Room status</th>
                     <th>Price per night</th>
-                    <th>Payment status</th>
                     <th>Room maintenance</th>
                 </tr>
                 {
@@ -45,27 +52,28 @@ return(
                 <tr key={index}>
                     <td>{room.room_number}</td>
                     <td>{room.room_type.room_type_name}</td>
-                    <td><Badge>
+                    {/* <td><Badge>
                     {room.reservations && room.reservations.length > 0
                         ? room.reservations[0].reservation_status
                         : "No reservations"}
                         </Badge>
-                    </td>
+                    </td> */}
                     <td><Badge>{room.room_status}</Badge></td>
                     <td>{room.price_per_night}</td>
-                    <td><Badge>
+                    {/* <td><Badge>
                     {room.reservations && room.reservations.length > 0
                         ? room.reservations[0].payment_status
                         : "No payment"}
                         </Badge>
-                </td>
-                <td><Badge>
+                </td> */}
+                {/* <td><Badge>
                    
                     {room.room_maintenance && room.room_maintenance.length > 0
                         ? room.room_maintenance[0].maintenance_status 
                         : "No maintenance"}
                     </Badge>
-                </td>
+                </td> */}
+                <td>{room.description}</td>
                 </tr>
             ))
     }
