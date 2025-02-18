@@ -21,9 +21,18 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        $data=$request->all();
-        $room=Room::create($data);
-        return response()->json($room);
+         $validatedData = $request->validate([
+            'room_number' => 'required|string',
+            'max_occupancy' => 'required|integer',
+            'room_type_id' => 'required|integer', // Ensure this matches your schema
+            'price_per_night' => 'required|numeric',
+            'room_status' => 'required|string',
+            'description' => 'required|string',
+        ]);
+
+        $room = Room::create($validatedData);
+
+        return response()->json($room, 201);
     }
 
     /**

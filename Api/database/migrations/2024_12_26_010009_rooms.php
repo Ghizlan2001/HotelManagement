@@ -14,7 +14,6 @@ return new class extends Migration
     Schema::create('rooms', function (Blueprint $table) {
         $table->id();
         $table->string('room_number')->unique();
-    
         $table->string('room_status')->default('Available');
         $table->decimal('price_per_night', 8, 2);
         $table->integer('max_occupancy');
