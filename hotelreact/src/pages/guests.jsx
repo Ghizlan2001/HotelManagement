@@ -1,70 +1,89 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Badge from "../components/badge";
+import AddGuestForm from "../components/guestModal"; 
 
-const Guests=()=>{
-    const [Guests, setGuests]= useState([]);
-    const [Rooms, setRooms]= useState([]);
-    useEffect(()=>{
+const Guests = () => {
+    const [guests, setGuests] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
         getGuests();
-        getRooms();
-    },[]);
-    const getGuests=async()=>{
+    }, []);
+
+    const getGuests = async () => {
         const resp = await axios.get("/guests");
         setGuests(resp.data);
-        console.log(resp.data)
-    }
-    const getRooms=async()=>{
-        const resp =await axios.get("/rooms")
-        setRooms(resp.data);
         console.log(resp.data);
-    }
-    // const statusStyles = {
-    //     "Available": { backgroundColor: "green", color: "white", padding: "5px", borderRadius: "5px" },
-    //     "Occupied": { backgroundColor: "red", color: "white", padding: "5px", borderRadius: "5px" },
-    //     "Maintenance": { backgroundColor: "yellow", color: "black", padding: "5px", borderRadius: "5px" },
-    //   };
-return(
-    <div className="container">
-        <h6 className="title">Guests</h6>
-        <div className="content">
-            <div className="header">
-            <header>
-                <div>
-                    <a href="" className="tab">Check In</a>
-                    <a href="" className="tab">Check Out</a>
+    };
+
+    const handleAddGuestClick = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleAddGuestSubmit = async (newGuest) => {
+        await axios.post("/guests", newGuest);
+        getGuests(); // Refresh the guests list after adding a new guest
+    };
+
+    return (
+        <div className="container">
+            <h6 className="title">Guests</h6>
+            <div className="content">
+                <div className="header">
+                    <header>
+                        <div>
+                            <a href="" className="tab">Check In</a>
+                            <a href="" className="tab">Check Out</a>
+                        </div>
+                        <div>
+                            <button onClick={handleAddGuestClick}>Add Guest</button>
+                        </div>
+                    </header>
                 </div>
-                <div>
-                </div>
-            </header>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Guest Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Identification Type</th>
+                            <th>Identification Number</th>
+                            <th>Check In Date</th>
+                            <th>Check Out Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {guests.map((guest) => (
+                            guest.reservations.map((reservation) => (
+                                <tr key={`${guest.id}`}>
+                                    <td>{guest.id}</td>
+                                    <td>{guest.first_name}</td>
+                                    <td>{guest.last_name}</td>
+                                    <td>{guest.phone_number}</td>
+                                    <td>{guest.email}</td>
+                                    <td>{guest.address}</td>
+                                    <td>{guest.identification_type}</td>
+                                    <td>{guest.identification_number}</td>
+                                    <td>{reservation.check_in_date}</td>
+                                    <td>{reservation.check_out_date}</td>
+                                </tr>
+                            ))
+                        ))}
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <tr>
-                    <th>Reservation Id</th>
-                    <th>Name</th>
-                    <th>Room Number</th>
-                    <th>Total Amount</th>
-                    <th>Reservation Status</th>
-                    <th>Room Status</th>
-                </tr>
-                {Guests.map((guest)=>(
-                    guest.reservations.map((reservation) => {
-                        const room = Rooms.find(room => room.id === reservation.room_id);
-                        return(
-                            <tr key={reservation.id}>
-                                <td>{reservation.id}</td>
-                                <td>{guest.first_name} {guest.last_name}</td>
-                                <td>{reservation.room_id}</td>
-                                <td>{reservation.total_amount}</td>
-                                <td><Badge>{reservation.reservation_status}</Badge></td>
-                                <td><Badge>{room ? room.room_status : 'Unknown'}</Badge></td>
-                            </tr>
-                        )
-                    })
-                ))}
-            </table>
+            {isModalOpen && (
+                <AddGuestForm onClose={handleCloseModal} onSubmit={handleAddGuestSubmit} />
+            )}
         </div>
-    </div>
-);
+    );
 };
+
 export default Guests;

@@ -174,3 +174,33 @@ nav input{
 .submit-button:hover {
   background-color: #218838;
 }
+
+.filter-dropdown {
+  margin-left: 10px;
+}
+.filter-dropdown {
+  padding: 8px 10px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  color: #555; 
+  background-color: #f9f9f9; 
+  border: 1px solid #7e7e7e;
+  border-radius: 12px; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 40px;
+}
+
+.filter-dropdown:hover {
+  background-color: #f3f3f3; 
+}
+
+.filter-dropdown:focus {
+  outline: none;
+  border: 1px solid #007bff; 
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.filter-dropdown option {
+  color: #333; 
+}
