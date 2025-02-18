@@ -4,6 +4,7 @@ import Guests from './pages/guests';
 import Sidebar from './pages/sidebar';
 import RoomMaintenance from './pages/roomMaintenance';
 import AddRooms from './pages/addrooms';
+import AddMaintenance from './pages/AddRoomMaintenance';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/guests" element={<Guests />} />
             <Route path='/addrooms' element={<AddRooms setRooms={setRooms} Rooms={Rooms}/>}/>
             <Route path='/roommaintenance' element={<RoomMaintenance/>}/>
+            <Route path='/addroommaintenance' element={<AddMaintenance/>}/>
           </Routes>
         </div>
       </BrowserRouter>

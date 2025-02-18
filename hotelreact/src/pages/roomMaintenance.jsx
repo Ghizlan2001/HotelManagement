@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Badge from "../components/badge";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const RoomMaintenance=()=>{
+    const navigate=useNavigate();
     const [roomMaintenance, setRoomMaintenance]=useState([]);
     useEffect(()=>{
         getRoomMaintenance();
@@ -11,26 +13,36 @@ const RoomMaintenance=()=>{
         setRoomMaintenance(resp.data);
         console.log(resp.data)
     }
+    const AddMaintenance=()=>{
+        navigate('/addroommaintenance');
+    }
     return(
     <div className="container">
         <h6 className="title">Room Maintenance</h6>
             <div className="content">
+            <header>
+            <div className="header">
+            <button className="tab" >Oldest</button>
+            <button className="tab" > Newest</button>
+            </div>
+            <button className="add" onClick={AddMaintenance}>Add Room Maintenance</button>
+            </header>
                 <table>
                     <tr>
-                        <th>Room id</th>
+                        <th>Room Number</th>
                         <th>Maintenance type</th>
                         <th>Description</th>
                         
                         <th>Maintenance date</th>
                     </tr>
                     {
-                        roomMaintenance.map((room, index) => (
+                        roomMaintenance.map((rooms, index) => (
                         <tr key={index}>
-                            <td>{room.room_id}</td>
-                            <td><Badge>{room.maintenance_status}</Badge></td>
-                            <td>{room.issue_description}</td>
+                            <td>{rooms.room.room_number}</td>
+                            <td><Badge>{rooms.maintenance_status}</Badge></td>
+                            <td>{rooms.issue_description}</td>
                             {/* <td>{room.maintenance_costs}</td> */}
-                            <td>{room.maintenance_date}</td>
+                            <td>{rooms.maintenance_date}</td>
                         </tr>
                         ))
                     }

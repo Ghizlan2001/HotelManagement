@@ -164,7 +164,7 @@ return(
         </select>
       </div> */}
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label htmlFor="roomMaintenance">Room maintenance</label>
         <select
           id="roomMaintenance"
@@ -178,7 +178,7 @@ return(
           <option value="Completed">Completed</option>
 
         </select>
-      </div>
+      </div> */}
       
       
       <div className="form-group">
