@@ -39,8 +39,7 @@ const Reservations = () => {
     };
 
     const filteredReservations = selectedStatus === '' ? Reservations : Reservations.filter(reservation => {
-        const room = Rooms.find(room => room.id === reservation.room_id);
-        return room && room.room_status === selectedStatus;
+        return reservation.reservation_status === selectedStatus;
     });
     
 
@@ -67,9 +66,9 @@ return(
                 <div>
                     <select onChange={handleStatusChange} value={selectedStatus} className="filter-dropdown">
                         <option value="">All</option>
-                        <option value="Available">Available</option>
-                        <option value="Occupied">Occupied</option>
-                        <option value="Maintenance">Maintenance</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Cancelled">Cancelled</option>
                     </select>
                     <button onClick={handleAddReservationClick}>Add reservation</button>
                 </div>
@@ -83,6 +82,7 @@ return(
                     <th>Total Amount</th>
                     <th>Reservation Status</th>
                     <th>Room Status</th>
+                    <th>Payment Status</th>
                 </tr>
                 {filteredReservations.map((reservation) => {
                     const guest = Guests.find(guest => guest.id === reservation.guest_id);
@@ -91,10 +91,11 @@ return(
                         <tr key={reservation.id}>
                             <td>{reservation.id}</td>
                             <td>{guest ? `${guest.first_name} ${guest.last_name}` : 'Unknown'}</td>
-                            <td>{reservation.room_id}</td>
+                            <td>{room ? room.room_number : 'Unknown'}</td>
                             <td>{reservation.total_amount}</td>
                             <td><Badge>{reservation.reservation_status}</Badge></td>
                             <td><Badge>{room ? room.room_status : 'Unknown'}</Badge></td>
+                            <td><Badge>{reservation.payment_status}</Badge></td>
                         </tr>
                     );
                 })}

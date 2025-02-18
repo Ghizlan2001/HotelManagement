@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './modal.css'; 
 
 const AddReservationForm = ({ onClose, onSubmit }) => {
@@ -13,9 +14,47 @@ const AddReservationForm = ({ onClose, onSubmit }) => {
         payment_status: 'Pending'
     });
 
+    const [guests, setGuests] = useState([]);
+    const [rooms, setRooms] = useState([]);
+    const reservationStatus = ['Confirmed', 'Pending', 'Cancelled'];
+    const paymentStatus = ['Completed', 'Pending', 'Refunded'];
+
+    useEffect(() => {
+        fetchGuests();
+        fetchRooms();
+    }, []);
+
+    const fetchGuests = async () => {
+        try {
+            const response = await axios.get('/guests');
+            setGuests(response.data);
+        } catch (error) {
+            console.error('Error fetching guests:', error);
+        }
+    };
+
+    const fetchRooms = async () => {
+        try {
+            const response = await axios.get('/rooms');
+            setRooms(response.data);
+        } catch (error) {
+            console.error('Error fetching rooms:', error);
+        }
+    };
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setNewReservation({ ...newReservation, [name]: value });
+    };
+
+    const handleGuestChange = (event) => {
+        const selectedGuest = guests.find(guest => guest.id === parseInt(event.target.value));
+        setNewReservation({ ...newReservation, guest_id: selectedGuest.id });
+    };
+
+    const handleRoomChange = (event) => {
+        const selectedRoom = rooms.find(room => room.id === parseInt(event.target.value));
+        setNewReservation({ ...newReservation, room_id: selectedRoom.id });
     };
 
     const handleSubmit = (event) => {
@@ -40,12 +79,22 @@ const AddReservationForm = ({ onClose, onSubmit }) => {
                 <h2>Add Reservation</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Guest ID:</label>
-                        <input type="text" name="guest_id" value={newReservation.guest_id} onChange={handleInputChange} required />
+                        <label>Guest Name:</label>
+                        <select name="guest_id" value={newReservation.guest_id} onChange={handleGuestChange} required>
+                            <option value="">Select Guest</option>
+                            {guests.map(guest => (
+                                <option key={guest.id} value={guest.id}>{guest.first_name} {guest.last_name}</option>
+                            ))}
+                        </select>
                     </div>
                     <div>
-                        <label>Room ID:</label>
-                        <input type="text" name="room_id" value={newReservation.room_id} onChange={handleInputChange} required />
+                        <label>Room Number:</label>
+                        <select name="room_id" value={newReservation.room_id} onChange={handleRoomChange} required>
+                            <option value="">Select Room</option>
+                            {rooms.map(room => (
+                                <option key={room.id} value={room.id}>{room.room_number}</option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <label>Check-in Date:</label>
@@ -61,7 +110,11 @@ const AddReservationForm = ({ onClose, onSubmit }) => {
                     </div>
                     <div>
                         <label>Reservation Status:</label>
-                        <input type="text" name="reservation_status" value={newReservation.reservation_status} onChange={handleInputChange} required />
+                        <select name="reservation_status" value={newReservation.reservation_status} onChange={handleInputChange} required>
+                            {reservationStatus.map(status => (
+                                <option key={status} value={status}>{status}</option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <label>Total Amount:</label>
@@ -69,7 +122,11 @@ const AddReservationForm = ({ onClose, onSubmit }) => {
                     </div>
                     <div>
                         <label>Payment Status:</label>
-                        <input type="text" name="payment_status" value={newReservation.payment_status} onChange={handleInputChange} required />
+                        <select name="payment_status" value={newReservation.payment_status} onChange={handleInputChange} required>
+                            {paymentStatus.map(status => (
+                                <option key={status} value={status}>{status}</option>
+                            ))}
+                        </select>
                     </div>
                     <button type="submit">Submit</button>
                     <button type="button" onClick={onClose}>Cancel</button>
