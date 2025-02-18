@@ -2,6 +2,7 @@ import './App.css';
 import Rooms from './pages/rooms';
 import Guests from './pages/guests';
 import Sidebar from './pages/sidebar';
+import Reservations from './pages/reservations';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Routes>
             <Route path="/rooms" element={<Rooms />} />
             <Route path="/guests" element={<Guests />} />
+            <Route path="/reservations" element={ <Reservations />} />
           </Routes>
         </div>
       </BrowserRouter>
