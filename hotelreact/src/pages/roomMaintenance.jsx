@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import Badge from "../components/badge";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const RoomMaintenance=()=>{
+const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
     const navigate=useNavigate();
-    const [roomMaintenance, setRoomMaintenance]=useState([]);
     useEffect(()=>{
         getRoomMaintenance();
     },[]);
@@ -38,7 +37,7 @@ const RoomMaintenance=()=>{
                     {
                         roomMaintenance.map((rooms, index) => (
                         <tr key={index}>
-                            <td>{rooms.room.room_number}</td>
+                            <td>{rooms.room_id}</td>
                             <td><Badge>{rooms.maintenance_status}</Badge></td>
                             <td>{rooms.issue_description}</td>
                             {/* <td>{room.maintenance_costs}</td> */}
