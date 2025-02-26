@@ -45,35 +45,28 @@ return(
                     <th>Room type</th>
                     <th>Room status</th>
                     <th>Price per night</th>
-                    <th>Room maintenance</th>
+                    <th>Room Description</th>
                 </tr>
                 {
                     rooms.map((room, index) => (
                 <tr key={index}>
                     <td>{room.room_number}</td>
                     <td>{room.room_type.room_type_name}</td>
-                    {/* <td><Badge>
-                    {room.reservations && room.reservations.length > 0
-                        ? room.reservations[0].reservation_status
-                        : "No reservations"}
-                        </Badge>
-                    </td> */}
-                    <td><Badge>{room.room_status}</Badge></td>
+                    <td>
+                        {room.room_status === "Maintenance" ? (
+                            <span 
+                                style={{ cursor: 'pointer' }} 
+                                onClick={() => navigate('/roomMaintenance')}
+                            >
+                                <Badge>{room.room_status}</Badge>
+                            </span>
+                        ) : (
+                            <Badge>{room.room_status}</Badge>
+                        )}
+                    </td>
+
                     <td>{room.price_per_night}</td>
-                    {/* <td><Badge>
-                    {room.reservations && room.reservations.length > 0
-                        ? room.reservations[0].payment_status
-                        : "No payment"}
-                        </Badge>
-                </td> */}
-                {/* <td><Badge>
-                   
-                    {room.room_maintenance && room.room_maintenance.length > 0
-                        ? room.room_maintenance[0].maintenance_status 
-                        : "No maintenance"}
-                    </Badge>
-                </td> */}
-                <td>{room.description}</td>
+                    <td>{room.description}</td>
                 </tr>
             ))
     }
