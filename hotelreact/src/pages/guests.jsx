@@ -4,6 +4,7 @@ import AddGuestForm from "../components/guestModal";
 
 const Guests = () => {
     const [guests, setGuests] = useState([]);
+    const [displayedGuests, setDisplayedGuests] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -13,6 +14,7 @@ const Guests = () => {
     const getGuests = async () => {
         const resp = await axios.get("/guests");
         setGuests(resp.data);
+        setDisplayedGuests(resp.data); 
         console.log(resp.data);
     };
 
@@ -24,9 +26,32 @@ const Guests = () => {
         setIsModalOpen(false);
     };
 
+    const handleCheckInClick = () => {
+        const currentlyCheckedIn = guests.filter(guest => 
+            guest.reservations.some(reservation => 
+                new Date(reservation.check_in_date) <= new Date() && 
+                new Date(reservation.check_out_date) >= new Date()
+            )
+        );
+        setDisplayedGuests(currentlyCheckedIn);
+    };
+
+    const handleCheckOutClick = () => {
+        const checkedOutGuests = guests.filter(guest => 
+            guest.reservations.every(reservation => 
+                new Date(reservation.check_out_date) < new Date()
+            )
+        );
+        setDisplayedGuests(checkedOutGuests);
+    };
+
+    const handleAllClick = () => {
+        setDisplayedGuests(guests); 
+    };
+
     const handleAddGuestSubmit = async (newGuest) => {
         await axios.post("/guests", newGuest);
-        getGuests(); // Refresh the guests list after adding a new guest
+        getGuests(); 
     };
 
     return (
@@ -36,8 +61,9 @@ const Guests = () => {
                 <div className="header">
                     <header>
                         <div>
-                            <a href="" className="tab">Check In</a>
-                            <a href="" className="tab">Check Out</a>
+                            <button className="tab" onClick={handleAllClick}>All</button>
+                            <button className="tab" onClick={handleCheckInClick}>Check In</button>
+                            <button className="tab" onClick={handleCheckOutClick}>Check Out</button>
                         </div>
                         <div>
                             <button onClick={handleAddGuestClick}>Add Guest</button>
@@ -55,26 +81,22 @@ const Guests = () => {
                             <th>Address</th>
                             <th>Identification Type</th>
                             <th>Identification Number</th>
-                            <th>Check In Date</th>
-                            <th>Check Out Date</th>
+                            <th>Total Reservations</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {guests.map((guest) => (
-                            guest.reservations.map((reservation) => (
-                                <tr key={`${guest.id}`}>
-                                    <td>{guest.id}</td>
-                                    <td>{guest.first_name}</td>
-                                    <td>{guest.last_name}</td>
-                                    <td>{guest.phone_number}</td>
-                                    <td>{guest.email}</td>
-                                    <td>{guest.address}</td>
-                                    <td>{guest.identification_type}</td>
-                                    <td>{guest.identification_number}</td>
-                                    <td>{reservation.check_in_date}</td>
-                                    <td>{reservation.check_out_date}</td>
-                                </tr>
-                            ))
+                        {displayedGuests.map((guest) => (
+                            <tr key={guest.id}>
+                                <td>{guest.id}</td>
+                                <td>{guest.first_name}</td>
+                                <td>{guest.last_name}</td>
+                                <td>{guest.phone_number}</td>
+                                <td>{guest.email}</td>
+                                <td>{guest.address}</td>
+                                <td>{guest.identification_type}</td>
+                                <td>{guest.identification_number}</td>
+                                <td>{guest.reservations.length}</td>
+                            </tr>
                         ))}
                     </tbody>
                 </table>
