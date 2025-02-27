@@ -58,18 +58,14 @@ const Guests = () => {
         <div className="container">
             <h6 className="title">Guests</h6>
             <div className="content">
-                <div className="header">
-                    <header>
-                        <div>
-                            <button className="tab" onClick={handleAllClick}>All</button>
-                            <button className="tab" onClick={handleCheckInClick}>Check In</button>
-                            <button className="tab" onClick={handleCheckOutClick}>Check Out</button>
-                        </div>
-                        <div>
-                            <button onClick={handleAddGuestClick}>Add Guest</button>
-                        </div>
-                    </header>
-                </div>
+                <header>
+                    <div className="header">
+                        <button className="tab" onClick={handleAllClick}>All</button>
+                        <button className="tab" onClick={handleCheckInClick}>Check In</button>
+                        <button className="tab" onClick={handleCheckOutClick}>Check Out</button>
+                    </div>
+                    <button className="add" onClick={handleAddGuestClick}>Add Guest</button>        
+                </header>
                 <table>
                     <thead>
                         <tr>
