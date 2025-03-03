@@ -61,19 +61,17 @@ return(
     <div className="container">
         <h6 className="title">Reservations</h6>
         <div className="content">
-            <div className="header">
             <header>
-                <div>
-                    <select onChange={handleStatusChange} value={selectedStatus} className="filter-dropdown">
+                <div className="header">
+                    <select onChange={handleStatusChange} value={selectedStatus} className="tab">
                         <option value="">All</option>
                         <option value="Confirmed">Confirmed</option>
                         <option value="Pending">Pending</option>
                         <option value="Cancelled">Cancelled</option>
                     </select>
-                    <button onClick={handleAddReservationClick}>Add reservation</button>
                 </div>
+                <button className="add" onClick={handleAddReservationClick}>Add reservation</button>
             </header>
-            </div>
             <table>
                 <tr>
                     <th>Reservation Id</th>
