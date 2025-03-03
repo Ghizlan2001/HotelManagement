@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddMaintenance = ({roomMaintenance, setRoomMaintenance}) => {
     const [roomId, setRoomId] = useState("");
@@ -7,6 +8,7 @@ const AddMaintenance = ({roomMaintenance, setRoomMaintenance}) => {
     const [roomDescription, setMaintenanceDescription] = useState("");
     const [MaintenanceDate, setMaintenanceDate] = useState("");
     const [rooms, setRooms] = useState([]);
+    const navigate = useNavigate();
     const AddNewMaintenance=async(e)=>{
         e.preventDefault();
         if (!roomId || !roomDescription|| !MaintenanceDate) {
@@ -27,6 +29,7 @@ const AddMaintenance = ({roomMaintenance, setRoomMaintenance}) => {
         setRoomMaintenanceStatus("");
         setMaintenanceDate("");
         console.log(resp.data);
+        navigate("/roommaintenance");
         } catch (error) {
             console.log(error);
         }
@@ -56,11 +59,15 @@ const AddMaintenance = ({roomMaintenance, setRoomMaintenance}) => {
                     required
                     >
                     <option value="">Select Room</option>
-                    {rooms.map((room) => (
-                        <option key={room.id} value={room.id}>
-                        {room.room_number}
-                        </option>
-                    ))}
+                    {rooms?.length > 0 ? (
+                        rooms.map((room) => (
+                            <option key={room?.id} value={room?.id}>
+                            {room?.room_number || "Unknown Room"}
+                            </option>
+                        ))
+                        ) : (
+                        <option disabled>Loading rooms...</option>
+                        )}
                     </select>
                 </div>
                 <div className="form-group">

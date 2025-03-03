@@ -40,7 +40,7 @@ const Guests = () => {
                             <a href="" className="tab">Check Out</a>
                         </div>
                         <div>
-                            <button onClick={handleAddGuestClick}>Add Guest</button>
+                            <button onClick={handleAddGuestClick} className="add">Add Guest</button>
                         </div>
                     </header>
                 </div>

@@ -4,7 +4,10 @@ import Badge from "../components/badge";
 import { useNavigate } from "react-router-dom";
 import AddRooms from "./addrooms";
 
-const Rooms=({rooms, setRooms})=>{
+const Rooms = ({ rooms, setRooms }) => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const roomsPerPage = 6; // Number of rooms per page
+
     const navigate = useNavigate();
     const [originalRooms, setOriginalRooms] = useState([]);
     useEffect(()=>{
@@ -26,7 +29,12 @@ const AvailableRooms = () => {
 const BookedRooms = () => {
     setRooms(originalRooms.filter((room) => room.room_status === "Occupied"));
 };
-return(
+    const indexOfLastRoom = currentPage * roomsPerPage;
+    const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
+    const currentRooms = rooms.slice(indexOfFirstRoom, indexOfLastRoom);
+
+    return (
+
     <div className="container">
         <h6 className="title">Rooms</h6>
         <div className="content">
@@ -47,11 +55,12 @@ return(
                     <th>Price per night</th>
                     <th>Room Description</th>
                 </tr>
-                {
-                    rooms.map((room, index) => (
+                {currentRooms.map((room, index) => (
+
                 <tr key={index}>
                     <td>{room.room_number}</td>
-                    <td>{room.room_type.room_type_name}</td>
+                    <td>{room.room_type ? room.room_type.room_type_name : 'N/A'}</td>
+
                     <td>
                         {room.room_status === "Maintenance" ? (
                             <span 
@@ -71,6 +80,17 @@ return(
             ))
     }
             </table>
+            <div className="pagination">
+                <button className="tab" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <span>Page {currentPage} of {Math.ceil(originalRooms.length / roomsPerPage)}</span>
+
+                <button className="tab" onClick={() => setCurrentPage(currentPage + 1)} disabled={indexOfLastRoom >= originalRooms.length}>
+                    Next
+                </button>
+            </div>
+
         </div>
     </div>
 );

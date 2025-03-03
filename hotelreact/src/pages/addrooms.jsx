@@ -3,16 +3,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddRooms=({rooms, setRooms})=>{
-  const navigate= useNavigate();
+    const navigate= useNavigate();
     const [roomNumber, setRoomNumber] = useState("");
     const [roomOccupacy, setRoomOccupacy] = useState("");
     const [roomType, setRoomType] = useState("");
     const [roomPrice, setRoomPrice] = useState("");
     const [roomStatus, setRoomStatus] = useState("");
-    // const [reservationStatus, setReservationStatus] = useState("");
     const [roomDescription, setRoomDescription] = useState("");
     const [roomMaintenance, setRoomMaintenance] = useState("");
-    // const [PaymentStatus, setPaymentStatus] = useState("");
     const addNewrooms=async(e)=>{
         e.preventDefault();
         const occupancyNumber = parseInt(roomOccupacy, 10);
@@ -38,25 +36,19 @@ const AddRooms=({rooms, setRooms})=>{
                 room_status:roomStatus,
                 description:roomDescription,
                 room_maintenance: [{maintenance_status: roomMaintenance}],
-                // reservations: [
-                //   {
-                //     reservation_status: reservationStatus,
-                //     payment_status: PaymentStatus
-                //   }
-                // ]
             });
             setRooms([...rooms,resp.data]);
             setRoomNumber("");
             setRoomOccupacy("");
-            setRoomType("Single");
+            setRoomType("");
             setRoomPrice("");
             setRoomStatus("");
             setRoomDescription("");
             setRoomMaintenance("");
-            // setPaymentStatus("");
-            // setReservationStatus("");
-
+            console.log("Room added successfully. Redirecting...");
             navigate("/rooms");
+            console.log("This should not appear if navigation works.");
+            console.log(resp.data);
         }catch(error){
             console.log(error);
         }
@@ -136,51 +128,6 @@ return(
           <option value="Maintenance">Maintenance</option>
         </select>
       </div>
-      {/* <div className="form-group">
-        <label htmlFor="reservationStatus">Reservation Status</label>
-        <select
-          id="reservationStatus"
-          name="reservationStatus"
-          value={reservationStatus}
-          onChange={(e) => setReservationStatus(e.target.value)}
-          required
-        >
-          <option value="Confirmed">Confirmed</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
-      </div> */}
-      {/* <div className="form-group">
-        <label htmlFor="PaymentStatus">Payement Status</label>
-        <select
-          id="PaymentStatus"
-          name="PaymentStatus"
-          value={PaymentStatus}
-          onChange={(e) => setPaymentStatus(e.target.value)}
-          required
-        >
-          <option value="Paid">Paid</option>
-          <option value="Pending">Pending</option>
-          <option value="Refunded">Refunded</option>
-        </select>
-      </div> */}
-
-      {/* <div className="form-group">
-        <label htmlFor="roomMaintenance">Room maintenance</label>
-        <select
-          id="roomMaintenance"
-          name="roomMaintenance"
-          value={roomMaintenance}
-          onChange={(e) => setRoomMaintenance(e.target.value)}
-          required
-        >
-          <option value="Pending">Pending</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Completed">Completed</option>
-
-        </select>
-      </div> */}
-      
-      
       <div className="form-group">
         <label htmlFor="roomDescription">Description</label>
         <input

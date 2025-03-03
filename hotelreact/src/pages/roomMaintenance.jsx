@@ -5,6 +5,8 @@ import Badge from "../components/badge";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
+    const [currentPage, setCurrentPage] = useState(1);
+    const roomsPerPage = 6;
     const navigate=useNavigate();
     const [sortOrder, setSortOrder] = useState('newToOld');
     
@@ -17,6 +19,10 @@ const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
         });
         return sorted;
     }, [roomMaintenance, sortOrder]);
+
+    const indexOfLastMaintenance = currentPage * roomsPerPage;
+    const indexOfFirstMaintenance = indexOfLastMaintenance - roomsPerPage;
+    const currentMaintenance = sortedMaintenance.slice(indexOfFirstMaintenance, indexOfLastMaintenance);
 
     useEffect(()=>{
         getRoomMaintenance();
@@ -60,19 +66,27 @@ const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
                         <th>Maintenance date</th>
                     </tr>
                     {
-                        sortedMaintenance.map((rooms) => (
-
-                        <tr key={rooms.id}>
-                            <td>{rooms.room.room_number}</td>
-                            <td><Badge>{rooms.maintenance_status}</Badge></td>
-                            <td>{rooms.issue_description}</td>
-                            {/* <td>{room.maintenance_costs}</td> */}
-                            <td>{rooms.maintenance_date}</td>
-                        </tr>
+                        currentMaintenance.map((maintenance) => (
+                            <tr key={maintenance.id}>
+                                <td>{maintenance.room?.room_number || "No Room Assigned"}</td>
+                                <td><Badge>{maintenance.maintenance_status}</Badge></td>
+                                <td>{maintenance.issue_description}</td>
+                                <td>{maintenance.maintenance_date}</td>
+                            </tr>
                         ))
                     }
                     </table>
-             </div>       
+             </div>
+             <div className="pagination">
+                <button className="tab" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <span>Page {currentPage} of {Math.ceil(sortedMaintenance.length / roomsPerPage)}</span>
+
+                <button className="tab" onClick={() => setCurrentPage(currentPage + 1)} disabled={indexOfLastMaintenance >= sortedMaintenance.length}>
+                    Next
+                </button>
+            </div>       
     </div>
     )
 };export default RoomMaintenance;
