@@ -6,10 +6,8 @@ const RoomCard = ({ room, rooms }) => {
     // Calculate the number of occupied rooms for this room type
     const occupiedRoomsCount = rooms.filter(r => r.room_type.room_type_name === room.room_type.room_type_name && 
         r.reservations.some(reservation => reservation.reservation_status === "Confirmed")).length;
-const Availability = rooms.filter(room =>
-        room.room_type.room_type_name === room.room_type.room_type_name && 
-        room.reservations.some(reservation => reservation.reservation_status === "Available")
-    ).length;
+    const Availability = rooms.filter(r => r.room_type.room_type_name === room.room_type.room_type_name && 
+        !r.reservations.some(reservation => reservation.reservation_status === "Confirmed")).length;
 
     return (
         <div className="room-card">
@@ -35,6 +33,40 @@ const RoomList = ({ rooms }) => {
                 {uniqueRooms.map((room, index) => (
                     <RoomCard key={index} room={room} rooms={rooms} />
                 ))}
+            </div>
+        </div>
+    );
+};
+
+const RoomStatus = ({ rooms }) => {
+    const totalRooms = rooms.length;
+    const occupiedRooms = rooms.filter(room =>
+        room.reservations.some(reservation => reservation.reservation_status === "Confirmed")
+    ).length;
+    const availableRooms = totalRooms - occupiedRooms;
+
+    const cleanRooms = rooms.filter(room => room.status === "Clean").length;
+    const dirtyRooms = rooms.filter(room => room.status === "Dirty").length;
+    const inspectedRooms = rooms.filter(room => room.status === "Inspected").length;
+
+    return (
+        <div className="room-status">
+            <h3>Room Status</h3>
+            <div className="status-grid">
+                <div>
+                    <h4>Occupied Rooms</h4>
+                    <p>Total: {occupiedRooms}</p>
+                    <p>Clean: {cleanRooms}</p>
+                    <p>Dirty: {dirtyRooms}</p>
+                    <p>Inspected: {inspectedRooms}</p>
+                </div>
+                <div>
+                    <h4>Available Rooms</h4>
+                    <p>Total: {availableRooms}</p>
+                    <p>Clean: {cleanRooms}</p>
+                    <p>Dirty: {dirtyRooms}</p>
+                    <p>Inspected: {inspectedRooms}</p>
+                </div>
             </div>
         </div>
     );
@@ -101,15 +133,18 @@ const Dashboard = () => {
     return (
         <div>
             <div>
-            <RoomList rooms={rooms} />
+                <RoomList rooms={rooms} />
             </div>
+            <div className="chart-container">
             <div className="chart">
-            <h3>Room Occupancy</h3>
-            <Chart options={options} series={series} type="radialBar" height={200} />
-            <div className="legend">
-            <p className="f"><span className="blue"></span>occupied</p>
-            <p><span className="blue"></span>available</p>
+                <h3>Room Occupancy</h3>
+                <Chart options={options} series={series} type="radialBar" height={200} />
+                <div className="legend">
+                    <p className="f"><span className="blue"></span>Occupied</p>
+                    <p><span className="green"></span>Available</p>
+                </div>
             </div>
+            <RoomStatus rooms={rooms} />
             </div>
         </div>
     );
