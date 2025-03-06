@@ -144,6 +144,7 @@ return(
       <button type="submit" className="submit-button">
         Add Room
       </button>
+      <button type="button" className="cancel-button" onClick={() => navigate('/rooms')}>Cancel</button>
     </form>
   </div>
 )

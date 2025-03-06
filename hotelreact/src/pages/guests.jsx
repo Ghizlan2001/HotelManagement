@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import AddGuestForm from "../components/guestModal"; 
+import { useNavigate } from "react-router-dom";
 
 const Guests = () => {
     const [guests, setGuests] = useState([]);
     const [displayedGuests, setDisplayedGuests] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getGuests();
@@ -19,11 +19,7 @@ const Guests = () => {
     };
 
     const handleAddGuestClick = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
+        navigate('/addguest');
     };
 
     const handleCheckInClick = () => {
@@ -47,11 +43,6 @@ const Guests = () => {
 
     const handleAllClick = () => {
         setDisplayedGuests(guests); 
-    };
-
-    const handleAddGuestSubmit = async (newGuest) => {
-        await axios.post("/guests", newGuest);
-        getGuests(); 
     };
 
     return (
@@ -97,9 +88,6 @@ const Guests = () => {
                     </tbody>
                 </table>
             </div>
-            {isModalOpen && (
-                <AddGuestForm onClose={handleCloseModal} onSubmit={handleAddGuestSubmit} />
-            )}
         </div>
     );
 };

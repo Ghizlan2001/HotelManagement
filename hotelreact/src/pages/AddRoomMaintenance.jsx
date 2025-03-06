@@ -112,6 +112,7 @@ const AddMaintenance = ({roomMaintenance, setRoomMaintenance}) => {
                 <button type="submit" className="submit-button" >
                 Add Room Maintenance
                 </button>
+                <button type="button" className="cancel-button" onClick={() => navigate('/roomMaintenance')}>Cancel</button>
             </form>
         </div>
     );

@@ -21,14 +21,14 @@ header{
   justify-content: space-between;
 
 }
-.add-room-container h1 {
+.add-room-container h1, .add-room-container h1, .add-guest-container h1 {
   font-size: 24px;
   margin-bottom: 20px;
   color: #333;
   text-align: center;
 }
 
-.add-room-form {
+.add-room-form, .add-guest-form, .add-reservation-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -42,7 +42,7 @@ header{
 
 
 
-.add-room-container {
+.add-room-container, .add-reservation-container, .add-guest-container {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -83,8 +83,23 @@ header{
   text-align: center;
 }
 
+.cancel-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #7e7e7e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
 .submit-button:hover {
   background-color: #218838;
+}
+
+.cancel-button:hover {
+  background-color: #555;
 }
 
 .filter-dropdown {
