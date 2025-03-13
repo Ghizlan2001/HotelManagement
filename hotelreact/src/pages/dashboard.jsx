@@ -2,6 +2,101 @@ import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import axios from "axios";
 
+const OverviewStats = ({ rooms }) => {
+    const isToday = (date) => {
+        const today = new Date();
+        const checkDate = new Date(date);
+        return (
+            checkDate.getDate() === today.getDate() &&
+            checkDate.getMonth() === today.getMonth() &&
+            checkDate.getFullYear() === today.getFullYear()
+        );
+    };
+
+    const isDateInRange = (date, startDate, endDate) => {
+        const checkDate = new Date(date);
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return checkDate >= start && checkDate <= end;
+    };
+
+    const today = new Date(); 
+    let checkIns = 0;
+    let checkOuts = 0;
+    let totalInHotel = 0;
+
+    rooms.forEach((room) => {
+        room.reservations.forEach((reservation) => {
+            if (reservation.reservation_status === "Confirmed") {
+                if (isToday(reservation.check_in_date)) {
+                    checkIns++;
+                }
+
+                if (isToday(reservation.check_out_date)) {
+                    checkOuts++;
+                }
+
+                if (
+                    isDateInRange(
+                        today,
+                        reservation.check_in_date,
+                        reservation.check_out_date
+                    )
+                ) {
+                    totalInHotel++;
+                }
+            }
+        });
+    });
+
+    const totalRooms = rooms.length;
+    const occupiedRooms = rooms.filter((room) => room.room_status === "Occupied").length;
+    const availableRooms = totalRooms - occupiedRooms;
+
+    return (
+        <div className="overview">
+            <h3>Overview</h3>
+            <div className="overview-grid">
+                <div className="overview-card">
+                    <div className="text">
+                        <h4>Today's</h4>
+                        <h5>Check-in</h5>
+                    </div>
+                    <p>{checkIns}</p>
+                </div>
+                <div className="overview-card">
+                    <div className="text">
+                        <h4>Today's</h4>
+                        <h5>Check-out</h5>
+                    </div>
+                    <p>{checkOuts}</p>
+                </div>
+                <div className="overview-card">
+                    <div className="text">
+                        <h4>Total</h4>
+                        <h5>In Hotel</h5>
+                    </div>
+                    <p>{totalInHotel}</p>
+                </div>
+                <div className="overview-card">
+                    <div className="text">
+                        <h4>Total</h4>
+                        <h5>Available Rooms</h5>
+                    </div>
+                    <p>{availableRooms}</p>
+                </div>
+                <div className="overview-card">
+                    <div className="text">
+                        <h4>Total</h4>
+                        <h5>Occupied Rooms</h5>
+                    </div>
+                    <p>{occupiedRooms}</p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const RoomCard = ({ room, rooms }) => {
     const occupiedRoomsCount = rooms.filter(r => r.room_type.room_type_name === room.room_type.room_type_name && 
         r.reservations.some(reservation => reservation.reservation_status === "Confirmed")).length;
@@ -157,6 +252,7 @@ const Dashboard = () => {
 
     return (
         <div>
+            <OverviewStats rooms={rooms} />
             <RoomList rooms={rooms} />
             <div className="chart-container">
                 <div className="chart">

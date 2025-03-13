@@ -362,6 +362,7 @@ body {
 /* Room List Styles */
 .card-container {
   margin-top: 20px;
+  margin-left: 20px;
 }
 
 .card-container h2 {
@@ -432,7 +433,59 @@ h3 {
   background-color: #e9ebea; /* Green color for available */
 }
 
+.overview {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.overview h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.overview-card {
+  background-color: #f9fafb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+}
+
+.overview-card .text {
+  text-align: left;
+}
+
+.overview-card h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.overview-card h5 {
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #494c51;
+}
+
+.overview-card p {
+  margin: 11px 12px 0px;
+  font-size: 27px;
+  font-weight: 700;
+  color: #3b82f6;
+}
 
 /* Room Status Styles */
 .chart-container {
