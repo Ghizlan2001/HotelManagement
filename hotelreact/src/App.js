@@ -20,11 +20,6 @@ function App() {
       <BrowserRouter>
         <div>
         <Sidebar />
-        <nav>
-        <ul>
-          <li><input type='search' placeholder='search for rooms'/></li>
-        </ul>
-      </nav>
       </div>
 
         <div className="main-content">
