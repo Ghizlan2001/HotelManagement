@@ -429,13 +429,13 @@ h3 {
 }
 
 .legend .green {
-  background-color: #10b981; /* Green color for available */
+  background-color: #e9ebea; /* Green color for available */
 }
 
 
 
 /* Room Status Styles */
-.chart-container{
+.chart-container {
   display: flex;
   width: 100%;
   justify-content: space-between;

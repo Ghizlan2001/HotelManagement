@@ -3,7 +3,6 @@ import Chart from "react-apexcharts";
 import axios from "axios";
 
 const RoomCard = ({ room, rooms }) => {
-    // Calculate the number of occupied rooms for this room type
     const occupiedRoomsCount = rooms.filter(r => r.room_type.room_type_name === room.room_type.room_type_name && 
         r.reservations.some(reservation => reservation.reservation_status === "Confirmed")).length;
     const Availability = rooms.filter(r => r.room_type.room_type_name === room.room_type.room_type_name && 
@@ -21,7 +20,6 @@ const RoomCard = ({ room, rooms }) => {
 };
 
 const RoomList = ({ rooms }) => {
-    // Extract unique room types
     const uniqueRooms = rooms.filter((room, index, self) =>
         index === self.findIndex((r) => r.room_type.room_type_name === room.room_type.room_type_name)
     );
@@ -40,9 +38,10 @@ const RoomList = ({ rooms }) => {
 
 const RoomStatus = ({ rooms }) => {
     const totalRooms = rooms.length;
-    const occupiedRooms = rooms.filter(room =>
-        room.reservations.some(reservation => reservation.reservation_status === "Confirmed")
+const occupiedRooms = rooms.filter(room =>
+        room.reservations.some(reservation => reservation.room_status === "Occupied")
     ).length;
+
     const availableRooms = totalRooms - occupiedRooms;
 
     const cleanRooms = rooms.filter(room => room.status === "Clean").length;
@@ -96,12 +95,36 @@ const Dashboard = () => {
     }, []);
 
     const totalRooms = rooms.length;
-    const occupiedRooms = rooms.filter(room =>
-        room.reservations.some(reservation => reservation.reservation_status === "Confirmed")
-    ).length;
+    const occupiedRooms = rooms.filter(room => room.room_status === "Occupied")
+    .length;
 
     const occupiedPercentage = totalRooms > 0 ? (occupiedRooms / totalRooms) * 100 : 0;
 
+    const monthlyData = Array(12).fill(0);
+    rooms.forEach(room => {
+        room.reservations.forEach(reservation => {
+            if (reservation.reservation_status === "Confirmed") {
+                const month = new Date(reservation.check_in_date).getMonth();
+                monthlyData[month] += 1;
+            }
+        });
+    });
+
+    const columnOptions = {
+        chart: { type: "bar" },
+        plotOptions: {
+            bar: { horizontal: false, columnWidth: "55%" }
+        },
+        dataLabels: { enabled: true },
+        xaxis: {
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        },
+        fill: { colors: ["#3b82f6"] }
+    };
+
+    const columnSeries = [{ name: "Occupied Rooms", data: monthlyData }];
+
+    // Define options for the radial bar chart
     const options = {
         chart: { type: "radialBar" },
         plotOptions: {
@@ -121,9 +144,11 @@ const Dashboard = () => {
             }
         },
         fill: { colors: ["#3b82f6"] },
-        labels: ["Occupied"]
+        // labels: ["Occupied"]
     };
 
+
+    // Define series data for the radial bar chart
     const series = [occupiedPercentage];
 
     if (loading) return <div>Loading...</div>;
@@ -132,20 +157,26 @@ const Dashboard = () => {
 
     return (
         <div>
-            <div>
-                <RoomList rooms={rooms} />
-            </div>
+            <RoomList rooms={rooms} />
             <div className="chart-container">
-            <div className="chart">
-                <h3>Room Occupancy</h3>
-                <Chart options={options} series={series} type="radialBar" height={200} />
-                <div className="legend">
-                    <p className="f"><span className="blue"></span>Occupied</p>
-                    <p><span className="green"></span>Available</p>
+                <div className="chart">
+                    <h3>Room Occupancy</h3>
+                    <Chart options={options} series={series} type="radialBar" height={200} />
+                    <div className="legend">
+                        <p className="f"><span className="blue"></span>Occupied</p>
+                        <p><span className="green"></span>Available</p>
+                    </div>
                 </div>
+                <RoomStatus rooms={rooms} />
+                
             </div>
-            <RoomStatus rooms={rooms} />
-            </div>
+            <div className="chart-container2">
+                <div className="chart">
+                    <h3>Monthly Occupancy</h3>
+                    <Chart options={columnOptions} series={columnSeries} type="bar" height={200} />
+                </div>
+                </div>
+            
         </div>
     );
 };
