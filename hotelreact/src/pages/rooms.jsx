@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Pencil, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import Badge from "../components/badge";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +33,18 @@ const BookedRooms = () => {
     const indexOfLastRoom = currentPage * roomsPerPage;
     const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
     const currentRooms = rooms.slice(indexOfFirstRoom, indexOfLastRoom);
+const deleteRoom = async (id) => {
+    console.log("Deleting room with ID:", id);
+    try {
+        const resp = await axios.delete(`/rooms/${id}`);
+        console.log(resp.data);
+        getRooms();
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+
 
     return (
 
@@ -54,6 +67,7 @@ const BookedRooms = () => {
                     <th>Room status</th>
                     <th>Price per night</th>
                     <th>Room Description</th>
+                    <th>Actions</th>
                 </tr>
                 {currentRooms.map((room, index) => (
 
@@ -76,7 +90,14 @@ const BookedRooms = () => {
 
                     <td>{room.price_per_night}</td>
                     <td>{room.description}</td>
+                    <td>
+                    <button onClick={() => navigate(`/addroom/${room.id}`, { state: { room } })}>
+                      <Pencil size={20}/>
+                    </button>
+                        <button className="delete" onClick={()=> deleteRoom(room.id)}><Trash size={20} /></button>
+                    </td>
                 </tr>
+                
             ))
     }
             </table>
@@ -94,4 +115,5 @@ const BookedRooms = () => {
         </div>
     </div>
 );
-};export default Rooms;
+};
+export default Rooms;

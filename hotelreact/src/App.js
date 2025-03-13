@@ -38,6 +38,7 @@ function App() {
             <Route path='/addrooms' element={<AddRooms setRooms={setRooms} rooms={rooms}/>}/>
             <Route path='/roommaintenance' element={<RoomMaintenance roomMaintenance={roomMaintenance} setRoomMaintenance={setRoomMaintenance}/>}/>
             <Route path='/addroommaintenance' element={<AddMaintenance roomMaintenance={roomMaintenance} setRoomMaintenance={setRoomMaintenance}/>}/>
+            <Route path="/addroom/:id" element={<AddRooms />} />
           </Routes>
         </div>
       </BrowserRouter>
