@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Pencil, Trash } from "lucide-react";
 import { useMemo } from "react";
 
 import Badge from "../components/badge";
@@ -35,6 +36,18 @@ const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
     const AddMaintenance=()=>{
         navigate('/addroommaintenance');
     }
+    const deleteMaintenance=async(id)=>{
+        console.log("Deleting maintenance with ID:", id);
+        try {
+            const resp = await axios.delete(`/room-maintenance/${id}`);
+            console.log(resp.data);
+            getRoomMaintenance();
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+    
     return(
     <div className="container">
         <h6 className="title">Room Maintenance</h6>
@@ -64,6 +77,7 @@ const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
                         <th>Description</th>
                         
                         <th>Maintenance date</th>
+                        <th>Actions</th>
                     </tr>
                     {
                         currentMaintenance.map((maintenance) => (
@@ -72,6 +86,10 @@ const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
                                 <td><Badge>{maintenance.maintenance_status}</Badge></td>
                                 <td>{maintenance.issue_description}</td>
                                 <td>{maintenance.maintenance_date}</td>
+                                <td>
+                                    <button className="edit" onClick={() => navigate(`/addroommaintenance/${maintenance.id}`, { state: { maintenance } })}><Pencil size={20}/></button>
+                                    <button className="delete" onClick={() => deleteMaintenance(maintenance.id)}><Trash size={20} /></button>
+                                </td>
                             </tr>
                         ))
                     }

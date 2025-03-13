@@ -133,16 +133,20 @@ const RoomList = ({ rooms }) => {
 
 const RoomStatus = ({ rooms }) => {
     const totalRooms = rooms.length;
-const occupiedRooms = rooms.filter(room =>
-        room.reservations.some(reservation => reservation.room_status === "Occupied")
-    ).length;
-
+    const occupiedRooms = rooms.filter(room => room.room_status === "Occupied").length;
     const availableRooms = totalRooms - occupiedRooms;
 
-    const cleanRooms = rooms.filter(room => room.status === "Clean").length;
-    const dirtyRooms = rooms.filter(room => room.status === "Dirty").length;
-    const inspectedRooms = rooms.filter(room => room.status === "Inspected").length;
-
+    const CompletedMaintenance = rooms.filter(room => 
+        room.room_maintenance && room.room_maintenance.maintenance_status === "Completed"
+    ).length;
+    
+    const PendingMaintenance = rooms.filter(room => 
+        room.room_maintenance && room.room_maintenance.maintenance_status === "Pending"
+    ).length;
+    
+    const InProgressMaintenance = rooms.filter(room => 
+        room.room_maintenance && room.room_maintenance.maintenance_status === "In Progress"
+    ).length;
     return (
         <div className="room-status">
             <h3>Room Status</h3>
@@ -150,16 +154,16 @@ const occupiedRooms = rooms.filter(room =>
                 <div>
                     <h4>Occupied Rooms</h4>
                     <p>Total: {occupiedRooms}</p>
-                    <p>Clean: {cleanRooms}</p>
-                    <p>Dirty: {dirtyRooms}</p>
-                    <p>Inspected: {inspectedRooms}</p>
+                    <p>Completed: {CompletedMaintenance}</p>
+                    <p>Pending: {PendingMaintenance}</p>
+                    <p>In Progress: {InProgressMaintenance}</p>
                 </div>
                 <div>
                     <h4>Available Rooms</h4>
                     <p>Total: {availableRooms}</p>
-                    <p>Clean: {cleanRooms}</p>
-                    <p>Dirty: {dirtyRooms}</p>
-                    <p>Inspected: {inspectedRooms}</p>
+                    <p>Completed: {CompletedMaintenance}</p>
+                    <p>Pending: {PendingMaintenance}</p>
+                    <p>In Progress: {InProgressMaintenance}</p>
                 </div>
             </div>
         </div>

@@ -20,11 +20,6 @@ function App() {
       <BrowserRouter>
         <div>
         <Sidebar />
-        <nav>
-        <ul>
-          <li><input type='search' placeholder='search for rooms'/></li>
-        </ul>
-      </nav>
       </div>
 
         <div className="main-content">
@@ -38,6 +33,7 @@ function App() {
             <Route path='/addrooms' element={<AddRooms setRooms={setRooms} rooms={rooms}/>}/>
             <Route path='/roommaintenance' element={<RoomMaintenance roomMaintenance={roomMaintenance} setRoomMaintenance={setRoomMaintenance}/>}/>
             <Route path='/addroommaintenance' element={<AddMaintenance roomMaintenance={roomMaintenance} setRoomMaintenance={setRoomMaintenance}/>}/>
+            <Route path="/addroom/:id" element={<AddRooms />} />
           </Routes>
         </div>
       </BrowserRouter>
