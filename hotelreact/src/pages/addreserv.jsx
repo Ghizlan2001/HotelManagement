@@ -24,10 +24,10 @@ const AddReservationForm = () => {
         fetchRooms();
     }, []);
     useEffect(() => {
-                if (id && location.state?.reservation) {
-                    const reservation = location.state.reservation;
-                    setNewReservation(reservation);
-                }
+        if (id && location.state?.reservation) {
+            const reservation = location.state.reservation;
+            setNewReservation(reservation);
+        }
     }, [id, location.state]);
 
     const fetchGuests = async () => {
@@ -70,23 +70,19 @@ const AddReservationForm = () => {
             return;
         }
         try {
-            await axios.post("/reservations", newReservation);
-            alert("Reservation added successfully");
-            setNewReservation({
-                guest_id: '',
-                room_id: '',
-                check_in_date: '',
-                check_out_date: '',
-                number_of_guests: '',
-                reservation_status: 'Confirmed',
-                total_amount: '',
-                payment_status: 'Pending'
-            });
+            if (id) {
+                await axios.put(`/reservations/${id}`, newReservation);
+                alert("Reservation updated successfully");
+            } else {
+                await axios.post("/reservations", newReservation);
+                alert("Reservation added successfully");
+            }
             navigate('/reservations');
         } catch (error) {
-            console.error('Error adding reservation:', error);
+            console.error('Error saving reservation:', error);
         }
     };
+    
 
     return (
         <div className="add-reservation-container">
@@ -142,7 +138,7 @@ const AddReservationForm = () => {
                         <option value="Refunded">Refunded</option>
                     </select>
                 </div>
-                <button type="submit" className="submit-button">Add Reservation</button>
+                <button type="submit" className="submit-button">{id ? "Update Reservation" : "Add Reservation"}</button>
                 <button type="button" className="cancel-button" onClick={() => navigate('/reservations')}>Cancel</button>
             </form>
         </div>

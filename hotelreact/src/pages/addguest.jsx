@@ -39,19 +39,11 @@ const AddGuestForm = () => {
 
             if (id) {
                 await axios.put(`/guests/${id}`, guestData);
+                alert("Guest updated successfully")
             } else {
                 await axios.post("/guests", newGuest);
                 alert("Guest added successfully");
             }
-            setNewGuest({
-                first_name: '',
-                last_name: '',
-                phone_number: '',
-                email: '',
-                address: '',
-                identification_type: '',
-                identification_number: ''
-            });
             navigate('/guests');
         } catch (error) {
             console.error('Error adding guest:', error);
@@ -90,7 +82,7 @@ const AddGuestForm = () => {
                     <label>Identification Number:</label>
                     <input type="text" name="identification_number" value={newGuest.identification_number} onChange={handleInputChange} required />
                 </div>
-                <button type="submit" className="submit-button">Add Guest</button>
+                <button type="submit" className="submit-button">{id ? "Update Guest" : "Add Guest"}</button>
                 <button type="button" className="cancel-button" onClick={() => navigate('/guests')}>Cancel</button>
             </form>
         </div>
