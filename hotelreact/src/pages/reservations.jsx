@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Badge from "../components/badge";
+import { Pencil, Trash } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Reservations = () => {
@@ -36,6 +37,17 @@ const Reservations = () => {
         setReservations(resp.data);
         console.log(resp.data);
     };
+
+    const deleteReservation = async (id) => {
+        try {
+            const resp = await axios.delete(`/reservations/${id}`);
+            console.log(resp.data);
+            getReservations();
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
 
     const handleStatusChange = (event) => {
         setSelectedStatus(event.target.value);
@@ -78,6 +90,7 @@ const Reservations = () => {
                             <th>Reservation Status</th>
                             <th>Room Status</th>
                             <th>Payment Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,6 +106,12 @@ const Reservations = () => {
                                     <td><Badge>{reservation.reservation_status}</Badge></td>
                                     <td><Badge>{room ? room.room_status : 'Unknown'}</Badge></td>
                                     <td><Badge>{reservation.payment_status}</Badge></td>
+                                    <td>
+                                        <button onClick={() => navigate(`/addreserv/${reservation.id}`, { state: { reservation } })}>
+                                            <Pencil size={20}/>
+                                        </button>
+                                        <button className="delete" onClick={()=> deleteReservation(reservation.id)}><Trash size={20} /></button>
+                                    </td>
                                 </tr>
                             );
                         })}

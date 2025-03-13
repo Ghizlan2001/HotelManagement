@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const AddGuestForm = () => {
     const [newGuest, setNewGuest] = useState({
@@ -13,6 +13,15 @@ const AddGuestForm = () => {
         identification_number: ''
     });
     const navigate = useNavigate();
+    const { id } = useParams();
+    const location = useLocation();
+
+    useEffect(() => {
+            if (id && location.state?.guest) {
+                const guest = location.state.guest;
+                setNewGuest(guest);
+            }
+    }, [id, location.state]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -26,8 +35,14 @@ const AddGuestForm = () => {
             return;
         }
         try {
-            await axios.post("/guests", newGuest);
-            alert("Guest added successfully");
+            const guestData = newGuest;
+
+            if (id) {
+                await axios.put(`/guests/${id}`, guestData);
+            } else {
+                await axios.post("/guests", newGuest);
+                alert("Guest added successfully");
+            }
             setNewGuest({
                 first_name: '',
                 last_name: '',

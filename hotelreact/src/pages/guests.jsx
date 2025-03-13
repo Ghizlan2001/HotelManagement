@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Pencil, Trash } from "lucide-react";
 
 const Guests = () => {
     const [guests, setGuests] = useState([]);
@@ -49,6 +50,17 @@ const Guests = () => {
         setDisplayedGuests(guests); 
     };
 
+    const deleteGuest = async (id) => {
+        try {
+            const resp = await axios.delete(`/guests/${id}`);
+            console.log(resp.data);
+            getGuests();
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
     const indexOfLastGuest = currentPage * guestsPerPage;
     const indexOfFirstGuest = indexOfLastGuest - guestsPerPage;
     const currentGuests = displayedGuests.slice(indexOfFirstGuest, indexOfLastGuest);
@@ -78,6 +90,7 @@ const Guests = () => {
                                 <th>Identification Type</th>
                                 <th>Identification Number</th>
                                 <th>Total Reservations</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,6 +105,12 @@ const Guests = () => {
                                     <td>{guest.identification_type}</td>
                                     <td>{guest.identification_number}</td>
                                     <td>{guest.reservations.length}</td>
+                                    <td>
+                                        <button onClick={() => navigate(`/addguest/${guest.id}`, { state: { guest } })}>
+                                            <Pencil size={20}/>
+                                        </button>
+                                        <button className="delete" onClick={()=> deleteGuest(guest.id)}><Trash size={20} /></button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
