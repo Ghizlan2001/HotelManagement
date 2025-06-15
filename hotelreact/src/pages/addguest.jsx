@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const AddGuestForm = () => {
     const [newGuest, setNewGuest] = useState({
@@ -13,6 +13,15 @@ const AddGuestForm = () => {
         identification_number: ''
     });
     const navigate = useNavigate();
+    const { id } = useParams();
+    const location = useLocation();
+
+    useEffect(() => {
+            if (id && location.state?.guest) {
+                const guest = location.state.guest;
+                setNewGuest(guest);
+            }
+    }, [id, location.state]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -26,17 +35,15 @@ const AddGuestForm = () => {
             return;
         }
         try {
-            await axios.post("/guests", newGuest);
-            alert("Guest added successfully");
-            setNewGuest({
-                first_name: '',
-                last_name: '',
-                phone_number: '',
-                email: '',
-                address: '',
-                identification_type: '',
-                identification_number: ''
-            });
+            const guestData = newGuest;
+
+            if (id) {
+                await axios.put(`/guests/${id}`, guestData);
+                alert("Guest updated successfully")
+            } else {
+                await axios.post("/guests", newGuest);
+                alert("Guest added successfully");
+            }
             navigate('/guests');
         } catch (error) {
             console.error('Error adding guest:', error);
@@ -75,7 +82,7 @@ const AddGuestForm = () => {
                     <label>Identification Number:</label>
                     <input type="text" name="identification_number" value={newGuest.identification_number} onChange={handleInputChange} required />
                 </div>
-                <button type="submit" className="submit-button">Add Guest</button>
+                <button type="submit" className="submit-button">{id ? "Update Guest" : "Add Guest"}</button>
                 <button type="button" className="cancel-button" onClick={() => navigate('/guests')}>Cancel</button>
             </form>
         </div>

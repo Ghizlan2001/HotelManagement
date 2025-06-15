@@ -1,0 +1,51 @@
+.thank-you-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--light-color); /* Using your original light color */
+}
+
+.checkmark-circle {
+  stroke: var(--primary-color); /* Your original primary color */
+  stroke-width: 2;
+}
+
+.checkmark-check {
+  stroke: var(--primary-color); /* Your original primary color */
+  stroke-width: 2;
+}
+
+h1 {
+  color: var(--primary-color); /* Your original primary color */
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-message {
+  color: var(--dark-color); /* Your original dark color */
+  font-size: 1.2rem;
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.contact-info {
+  color: var(--dark-color); /* Your original dark color */
+}
+
+.contact-info span {
+  color: var(--secondary-color); /* Your original secondary color */
+  font-weight: 600;
+}
+
+/* Keep the original animations */
+@keyframes stroke {
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes fill {
+  100% { fill: rgba(44, 62, 80, 0.1); } /* Based on your primary color */
+}

@@ -1,0 +1,47 @@
+.hero {
+  padding: 4rem 0;
+  background-color: var(--light-color);
+}
+
+.hero-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-text .btn {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.bg-light {
+  background-color: var(--light-color);
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}

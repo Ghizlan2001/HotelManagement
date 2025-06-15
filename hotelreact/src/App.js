@@ -36,6 +36,8 @@ function App() {
             <Route path='/addroommaintenance' element={<AddMaintenance roomMaintenance={roomMaintenance} setRoomMaintenance={setRoomMaintenance}/>}/>
             <Route path="/addroom/:id" element={<AddRooms />} />
             <Route path="/addroommaintenance/:id" element={<AddMaintenance />} />
+            <Route path="/addguest/:id" element={<AddGuestForm />} />
+            <Route path="/addreserv/:id" element={<AddReservationForm />} />
             <Route path="/login" element={<Login />}/>
           </Routes>
         </div>
