@@ -55,7 +55,7 @@ const OverviewStats = ({ rooms }) => {
 
     return (
         <div className="overview">
-            <h3>Overview</h3>
+            <h2>Overview</h2>
             <div className="overview-grid">
                 <div className="overview-card">
                     <div className="text">
@@ -261,21 +261,21 @@ const Dashboard = () => {
             <div className="chart-container">
                 <div className="chart">
                     <h3>Room Occupancy</h3>
-                    <Chart options={options} series={series} type="radialBar" height={200} />
+                    <Chart options={options} series={series} type="radialBar" height={300} />
                     <div className="legend">
                         <p className="f"><span className="blue"></span>Occupied</p>
                         <p><span className="green"></span>Available</p>
                     </div>
                 </div>
-                <RoomStatus rooms={rooms} />
-                
-            </div>
-            <div className="chart-container2">
                 <div className="chart">
                     <h3>Monthly Occupancy</h3>
-                    <Chart options={columnOptions} series={columnSeries} type="bar" height={200} />
+                    <Chart options={columnOptions} series={columnSeries} type="bar" height={250} />
                 </div>
-                </div>
+                
+            </div>
+            <div className="container2">
+                <RoomStatus rooms={rooms} />    
+            </div>
             
         </div>
     );

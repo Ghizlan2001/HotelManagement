@@ -50,7 +50,7 @@ const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
     
     return(
     <div className="container">
-        <h6 className="title">Room Maintenance</h6>
+        <h6 className="title">Upkeep</h6>
             <div className="content">
             <header>
             <div className="header">

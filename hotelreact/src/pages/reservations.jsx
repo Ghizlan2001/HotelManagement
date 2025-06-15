@@ -66,7 +66,7 @@ const Reservations = () => {
  
     return (
         <div className="container">
-            <h6 className="title">Reservations</h6>
+            <h6 className="title">Deals</h6>
             <div className="content">
                 <header>
                     <div className="header">
