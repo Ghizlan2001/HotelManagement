@@ -11,6 +11,7 @@ import AddReservationForm from './pages/addreserv';
 import Dashboard from './pages/dashboard';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
+import Login from './login';
 
 function App() {
   const [rooms, setRooms]=useState([]);
@@ -37,6 +38,7 @@ function App() {
             <Route path="/addroommaintenance/:id" element={<AddMaintenance />} />
             <Route path="/addguest/:id" element={<AddGuestForm />} />
             <Route path="/addreserv/:id" element={<AddReservationForm />} />
+            <Route path="/login" element={<Login />}/>
           </Routes>
         </div>
       </BrowserRouter>
