@@ -87,8 +87,8 @@ const RoomMaintenance=({roomMaintenance, setRoomMaintenance})=>{
                                 <td>{maintenance.issue_description}</td>
                                 <td>{maintenance.maintenance_date}</td>
                                 <td>
-                                    <button className="edit" onClick={() => navigate(`/addroommaintenance/${maintenance.id}`, { state: { maintenance } })}><Pencil size={20}/></button>
-                                    <button className="delete" onClick={() => deleteMaintenance(maintenance.id)}><Trash size={20} /></button>
+                                    <button className="edit-btn" onClick={() => navigate(`/addroommaintenance/${maintenance.id}`, { state: { maintenance } })}><Pencil size={20}/></button>
+                                    <button className="delete-btn" onClick={() => deleteMaintenance(maintenance.id)}><Trash size={20} /></button>
                                 </td>
                             </tr>
                         ))

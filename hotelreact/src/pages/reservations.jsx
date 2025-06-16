@@ -107,10 +107,10 @@ const Reservations = () => {
                                     <td><Badge>{room ? room.room_status : 'Unknown'}</Badge></td>
                                     <td><Badge>{reservation.payment_status}</Badge></td>
                                     <td>
-                                        <button onClick={() => navigate(`/addreserv/${reservation.id}`, { state: { reservation } })}>
+                                        <button className="edit-btn" onClick={() => navigate(`/addreserv/${reservation.id}`, { state: { reservation } })}>
                                             <Pencil size={20}/>
                                         </button>
-                                        <button className="delete" onClick={()=> deleteReservation(reservation.id)}><Trash size={20} /></button>
+                                        <button className="delete-btn" onClick={()=> deleteReservation(reservation.id)}><Trash size={20} /></button>
                                     </td>
                                 </tr>
                             );
