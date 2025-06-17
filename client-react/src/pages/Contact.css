@@ -89,10 +89,7 @@
   font-size: 1.2rem;
 }
 
-.social-links {
-  display: flex;
-  gap: 1rem;
-}
+
 
 .btn {
   background: var(--primary-color);
@@ -108,4 +105,31 @@
 .btn:hover {
   background: var(--primary-dark);
   transform: translateY(-2px);
+}
+.social-media {
+  margin-top: 20px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  color: #555;
+  font-size: 16px;
+}
+
+/* Optional hover effect */
+.social-icons .icon:hover {
+  background: #e0e0e0;
+  cursor: default;
 }

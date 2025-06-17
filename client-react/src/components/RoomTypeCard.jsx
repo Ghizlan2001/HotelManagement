@@ -26,7 +26,7 @@ const getRoomTypeImage = (roomTypeName) => {
     'Single': 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&h=800&fit=crop',
     'Double': 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&h=800&fit=crop',
     'Suite': 'https://i.pinimg.com/originals/11/51/2a/11512a8491b4d8d105c2c8aa0ba76cc8.jpg',
-    'Deluxe': 'https://www.maldives-bonus.com/media/cache/03/0e/030e809a442c7f5c5081119bdc7b023c.jpg',
+    'Deluxe': 'https://media.cntraveler.com/photos/59d683feb602bb771a64956c/16:9/w_2560%2Cc_limit/Bedroom1-TheMirageLasVegas-Nevada-CRHotel.jpg',
     'Family': 'https://architizer-prod.imgix.net/media/1445885914592MiamiEdition_Page_17.jpg'
   };
   
